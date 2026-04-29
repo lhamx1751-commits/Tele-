@@ -29,8 +29,6 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     teks += "Pilih menu di bawah ini:"
 
-    keyboard = []
-
     if is_admin:
         keyboard = [
             [
@@ -42,7 +40,6 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 InlineKeyboardButton("🔔 Pengingat", callback_data="akun_pengingat"),
             ],
             [
-                InlineKeyboardButton("🔍 Cari Akun", callback_data="akun_cari"),
                 InlineKeyboardButton("⚙️ Admin Panel", callback_data="admin_menu"),
             ],
         ]
@@ -54,7 +51,13 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    if update.message:
-        await update.message.reply_text(teks, parse_mode='Markdown', reply_markup=reply_markup)
+    if update.callback_query:
+        await update.callback_query.answer()
+        await update.callback_query.edit_message_text(
+            teks, parse_mode='Markdown', reply_markup=reply_markup
+        )
     else:
-        await update.callback_query.edit_message_text(teks, parse_mode='Markdown', reply_markup=reply_markup)
+        await update.message.reply_text(
+            teks, parse_mode='Markdown', reply_markup=reply_markup
+        )
+        
