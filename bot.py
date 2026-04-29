@@ -50,6 +50,8 @@ def main():
     app.add_handler(CallbackQueryHandler(akun_callback, pattern="^akun_"))
     app.add_handler(CallbackQueryHandler(pembayaran_callback, pattern="^bayar_"))
     app.add_handler(CallbackQueryHandler(admin_callback, pattern="^admin_"))
+    app.add_handler(CallbackQueryHandler(start_handler, pattern="^start_menu$"))
+    app.add_handler(CallbackQueryHandler(start_handler, pattern="^edit_akun_"))
 
     # Error handler
     app.add_error_handler(error_handler)
